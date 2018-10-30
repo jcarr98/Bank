@@ -14,6 +14,9 @@
 // partial writes. If there was an error it returns ERR_PIPE_WRITE_ERR.
 // Note: data is void * since the actual type being written does not matter.
 
+
+// this is a test!
+// hopefully this updates
 static int checked_write(int fd, void *data, int n)
 {
   char *d = (char *)data;
@@ -131,4 +134,3 @@ int atm_run(const char *trace, int bank_out_fd, int atm_in_fd, int atm_id)
 
   return SUCCESS;
 }
-
