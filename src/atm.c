@@ -14,6 +14,7 @@
 // partial writes. If there was an error it returns ERR_PIPE_WRITE_ERR.
 // Note: data is void * since the actual type being written does not matter.
 
+//i dont want to do this:)
 static int checked_write(int fd, void *data, int n)
 {
   char *d = (char *)data;
