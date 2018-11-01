@@ -14,7 +14,6 @@
 // partial writes. If there was an error it returns ERR_PIPE_WRITE_ERR.
 // Note: data is void * since the actual type being written does not matter.
 
-//i dont want to do this:)
 static int checked_write(int fd, void *data, int n)
 {
   char *d = (char *)data;
@@ -79,7 +78,12 @@ int atm(int bank_out_fd, int atm_in_fd, int atm_id, Command *cmd)
   int status = SUCCESS;
 
   // TODO: your code here
-
+  // if given id does not match atm id, return unknown ATM error
+  if(i != atm_id){
+    error_msg(ERR_UNKNOWN_ATM, "ID does not match ATM ID");
+    return ERR_UNKNOWN_ATM;
+  }
+  
   return status;
 }
 
