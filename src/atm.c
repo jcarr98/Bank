@@ -78,12 +78,34 @@ int atm(int bank_out_fd, int atm_in_fd, int atm_id, Command *cmd)
   int status = SUCCESS;
 
   // TODO: your code here
+
   // if given id does not match atm id, return unknown ATM error
   if(i != atm_id){
-    error_msg(ERR_UNKNOWN_ATM, "ID does not match ATM ID");
     return ERR_UNKNOWN_ATM;
   }
-  
+  if((status = checked_write(bank_out_fd, cmd, MESSAGE_SIZE)) != SUCCESS){
+    return status;
+  }
+  if((status = checked_read(atm_in_fd, &atmcmd, MESSAGE_SIZE)) != SUCCESS){
+    return status;
+  }
+
+  cmd_unpack(atmcmd, &c, &i, &f, &t, &a);
+  switch( c ){
+    case OK:
+      status = SUCCESS;
+      break;
+    case NOFUNDS:
+      status = ERR_NOFUNDS;
+      break;
+    case ACCUNKN:
+      status = ERR_UNKNOWN_ACCOUNT;
+      break;
+    default:
+      error_msg(ERR_UNKNOWN_CMD, "Unknown command");
+      status = ERR_UNKNOWN_CMD;
+  }
+
   return status;
 }
 

@@ -34,7 +34,7 @@ int main (int argc, char *argv[]) {
   atm_count     = trace_atm_count();
   account_count = trace_account_count();
   trace_close();
-
+  
   // This is a table of atm_out file descriptors. It will be used by
   // the bank process to communicate to each of the ATM processes.
   int atm_out_fd[atm_count];
@@ -48,7 +48,7 @@ int main (int argc, char *argv[]) {
 
   // TODO: BANK PROCESS FORKING
 
-  
+
   // Wait for each of the child processes to complete. We include
   // atm_count to include the bank process (i.e., this is not a
   // fence post error!)
@@ -58,4 +58,3 @@ int main (int argc, char *argv[]) {
 
   return 0;
 }
-
