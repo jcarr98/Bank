@@ -34,7 +34,7 @@ int main (int argc, char *argv[]) {
   atm_count     = trace_atm_count();
   account_count = trace_account_count();
   trace_close();
-  
+
   // This is a table of atm_out file descriptors. It will be used by
   // the bank process to communicate to each of the ATM processes.
   int atm_out_fd[atm_count];
@@ -44,10 +44,42 @@ int main (int argc, char *argv[]) {
   int bank_in_fd[atm_count];
 
   // TODO: ATM PROCESS FORKING
-
-
+  pid_t pid;
+  for(int i=0; i<atm_count-1; i++){
+    int to_atmfd[2];
+    pipe(to_atmfd);
+    atm_out_fd[i] = to_atmfd[1];
+    int to_bankfd[2];
+    pipe(to_bankfd);
+    bank_in_fd[i] = to_bankfd[0];
+    fork();
+    pid = getpid();
+    if(pid == 0){
+      close(to_atmfd[1]);
+      close(to_bankfd[0]);
+      if(atm_run(argv[0], to_bankfd[1], to_atmfd[0], i) != SUCCESS){
+        error_print();
+        exit(0);
+      }
+    }
+    else{
+      close(to_atmfd[0]);
+      close(to_bankfd[1]);
+    }
+  }
   // TODO: BANK PROCESS FORKING
-
+  fork();
+  pid = getpid();
+  if(pid == 0){
+    bank_open(atm_count, account_count);
+    if(run_bank(bank_in_fd, atm_out_fd) != SUCCESS){
+      error_print();
+      exit(0);
+    }
+    bank_dump();
+    bank_close();
+    exit(0);
+  }
 
   // Wait for each of the child processes to complete. We include
   // atm_count to include the bank process (i.e., this is not a
