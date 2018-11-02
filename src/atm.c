@@ -90,7 +90,7 @@ int atm(int bank_out_fd, int atm_in_fd, int atm_id, Command *cmd)
     return status;
   }
 
-  cmd_unpack(atmcmd, &c, &i, &f, &t, &a);
+  cmd_unpack(&atmcmd, &c, &i, &f, &t, &a);
   switch( c ){
     case OK:
       status = SUCCESS;
