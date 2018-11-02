@@ -1,7 +1,11 @@
-Name:
+Name: Anthony Woo
 
-Name(s) of teammates:
+Name(s) of teammates: Jeffery Carr, Raymond Tan
 
 Contributions of each team member:
+Anthony Woo - bank.c
+Jeffery Carr - banksim.c
+Raymond Tan - atm.c
 
 What made this team successful or unsuccessful (tools/apps, communication, etc.)?
+GitHub, meet up and work together.
