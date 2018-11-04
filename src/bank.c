@@ -161,6 +161,84 @@ int bank(int atm_out_fd[], Command *cmd, int *atms_remaining)
   if(check_valid_atm(i) != SUCCESS){
     return ERR_UNKNOWN_ATM;
   }
+<<<<<<< HEAD
+=======
+  switch ( c ){
+    case CONNECT:
+      MSG_OK(cmd, 0, f, t, a);
+      result = checked_write(atm_out_fd[i], cmd, MESSAGE_SIZE);
+      break;
+
+    case EXIT:
+      atms_remaining--;
+      MSG_OK(cmd, 0, f, t, a);
+      result = checked_write(atm_out_fd[i], cmd, MESSAGE_SIZE);
+      break;
+
+    case DEPOSIT:
+      if(check_valid_account(t) != SUCCESS){
+        MSG_ACCUNKN(cmd, 0, t);
+        result = checked_write(atm_out_fd[i], cmd, MESSAGE_SIZE);
+      } else {
+        accounts[t] += a;
+        MSG_OK(cmd, 0, f, t, a);
+        result = checked_write(atm_out_fd[i], cmd, MESSAGE_SIZE);
+      }
+      break;
+
+    case WITHDRAW:
+      if(check_valid_account(f) != SUCCESS){
+        MSG_ACCUNKN(cmd, 0, f);
+        result = checked_write(atm_out_fd[i], cmd, MESSAGE_SIZE);
+      }
+      else if(accounts[f] < a){
+        MSG_NOFUNDS(cmd, 0, f, a);
+        result = checked_write(atm_out_fd[i], cmd, MESSAGE_SIZE);
+      }
+      else {
+        accounts[f] -= a;
+        MSG_OK(cmd, 0, f, t, a);
+        result = checked_write(atm_out_fd[i], cmd, MESSAGE_SIZE);
+      }
+      break;
+
+    case TRANSFER:
+      if(check_valid_account(t) != SUCCESS){
+        MSG_ACCUNKN(cmd, 0, t);
+        result = checked_write(atm_out_fd[i], cmd, MESSAGE_SIZE);
+      }
+      else if(check_valid_account(f) != SUCCESS){
+        MSG_ACCUNKN(cmd, 0, f);
+        result = checked_write(atm_out_fd[i], cmd, MESSAGE_SIZE);
+      }
+      else if(accounts[f] < a){
+        MSG_NOFUNDS(cmd, 0, f, a);
+        result = checked_write(atm_out_fd[i], cmd, MESSAGE_SIZE);
+      }
+      else{
+        accounts[f] -= a;
+        accounts[t] += a;
+        MSG_OK(cmd, 0, f, t, a);
+        result = checked_write(atm_out_fd[i], cmd, MESSAGE_SIZE);
+      }
+      break;
+
+    case BALANCE:
+      if(check_valid_account(f) != SUCCESS){
+        MSG_ACCUNKN(cmd, 0, f);
+        result = checked_write(atm_out_fd[i], cmd, MESSAGE_SIZE);
+      }
+      else{
+        MSG_OK(cmd, 0, f, t, accounts[f]);
+        result = checked_write(atm_out_fd[i], cmd, MESSAGE_SIZE);
+      }
+      break;
+
+    default:
+      error_msg(ERR_UNKNOWN_CMD, "Unknown command");
+      result = ERR_UNKNOWN_CMD;
+  }
+>>>>>>> 523df383ea74c79823fa891a1fd5d0ae411328c1
 
   return result;
 }
