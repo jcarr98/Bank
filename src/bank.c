@@ -171,7 +171,7 @@ int bank(int atm_out_fd[], Command *cmd, int *atms_remaining)
       break;
 
     case EXIT:
-      &(atms_remaining) -= 1; // not so sure about this
+      atms_remaining--; // not so sure about this
       MSG_OK(cmd, 0, f, t, a);
       result = checked_write(atm_out_fd[i], cmd, MESSAGE_SIZE);
       break;
@@ -241,7 +241,7 @@ int bank(int atm_out_fd[], Command *cmd, int *atms_remaining)
   }
 >>>>>>> 523df383ea74c79823fa891a1fd5d0ae411328c1
 =======
-  
+
 >>>>>>> parent of cce15c5... ?
 
   return result;
