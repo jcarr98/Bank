@@ -171,7 +171,7 @@ int bank(int atm_out_fd[], Command *cmd, int *atms_remaining)
       break;
 
     case EXIT:
-      atms_remaining--;
+      &(atms_remaining) -= 1; // not so sure about this
       MSG_OK(cmd, 0, f, t, a);
       result = checked_write(atm_out_fd[i], cmd, MESSAGE_SIZE);
       break;
