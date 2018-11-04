@@ -161,7 +161,6 @@ int bank(int atm_out_fd[], Command *cmd, int *atms_remaining)
   if(check_valid_atm(i) != SUCCESS){
     return ERR_UNKNOWN_ATM;
   }
-  
 
   return result;
 }
