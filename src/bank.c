@@ -162,6 +162,7 @@ int bank(int atm_out_fd[], Command *cmd, int *atms_remaining)
     return ERR_UNKNOWN_ATM;
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   switch ( c ){
     case CONNECT:
@@ -239,6 +240,9 @@ int bank(int atm_out_fd[], Command *cmd, int *atms_remaining)
       result = ERR_UNKNOWN_CMD;
   }
 >>>>>>> 523df383ea74c79823fa891a1fd5d0ae411328c1
+=======
+  
+>>>>>>> parent of cce15c5... ?
 
   return result;
 }
